@@ -12,7 +12,8 @@ use <parts/motor.scad>
 main_cylinder();
 
 // not to print
-motor_axis();
+translate([0,25,0])
+motor();
 
 
 // TODO
