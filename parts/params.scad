@@ -17,7 +17,7 @@ motor_axis_length=100;
 // params for holes in the central cylinder
 hole_length=inner_tube_length-10;
 hole_depth=10;
-hole_wmin=3;
+hole_wmin=5;
 hole_wmax=10;
 
 
