@@ -10,6 +10,7 @@ use <parts/motor.scad>
 main_cylinder();
 
 // not to print
+rotate([0,0,180])
 translate([0,25,0])
 motor();
 
