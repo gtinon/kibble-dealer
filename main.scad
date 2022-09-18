@@ -1,5 +1,3 @@
-include <parts/params.scad>
-
 use <parts/shell.scad>
 use <parts/main_cylinder.scad>
 use <parts/motor.scad>
