@@ -42,7 +42,7 @@ hole_width=inner_tube_radius*0.7;
 
 reservoirH=30;
 
-// bottom plug
+// connector male/female
 plug_diameter_max=67.3;
 plug_diameter_min=62;
 plug_holders_diameter=64.3;
@@ -53,3 +53,4 @@ plug_guide_width=16;
 plug_wall_depth=1.5;
 plug_height_male=17;
 plug_height_female=14.5;
+plug_female_offset = plug_wall_depth + 0.5;
