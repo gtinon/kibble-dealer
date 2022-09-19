@@ -40,8 +40,16 @@ hole_length=inner_tube_length-1;
 hole_depth=inner_tube_radius-5;
 hole_width=inner_tube_radius*0.7;
 
-
-
-cylinder_radius_margin=0.5;
-
 reservoirH=30;
+
+// bottom plug
+plug_diameter_max=67.3;
+plug_diameter_min=62;
+plug_holders_diameter=64.3;
+plug_holders_width=15;
+plug_holders_height=1.5;
+plug_guide_diameter=66.85;
+plug_guide_width=16;
+plug_wall_depth=1.5;
+plug_height_male=17;
+plug_height_female=14.5;
