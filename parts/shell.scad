@@ -1,6 +1,7 @@
 include <../params.scad>
 
 use <cylinder_doors.scad>
+use <reservoir.scad>
 
 // for local tests only
 main_body();
@@ -9,14 +10,15 @@ main_body();
 module main_body() {    
     r=inner_tube_radius+cylinder_radius_margin;
     
-    union() {
-        // tube
-        rotor_shell(r);
-        
-        // rear door
-        translate([0,inner_tube_length/2+thickness,0])
-        rear_door(r);
-    }
+    // tube
+    rotor_shell(r);
+    
+    // rear door
+    translate([0,inner_tube_length/2+thickness,0])
+    rear_door(r);
+    
+    // reservoir
+    reservoir(r, 1);
 }
 
 module rotor_shell(radius) {
@@ -31,7 +33,7 @@ module rotor_shell(radius) {
         
         // lower opening
         translate([0,0,-radius])
-        cube([hole_width,hole_length,7], center=true);
+        cube([bottom_hole_width,hole_length,7], center=true);
             
         // top hole for feeder
         translate([0,0,radius])

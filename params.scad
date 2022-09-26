@@ -11,6 +11,12 @@ rear_axis_length=10;
 rear_axis_padding=1;
 front_axis_padding=1;
 
+// params for holes in the central cylinder
+hole_depth=inner_tube_radius-5;
+hole_length=inner_tube_length-1;
+hole_width=inner_tube_radius*0.7;
+bottom_hole_width=inner_tube_radius*0.7;
+
 // motor
 motor_total_length=71.35;
 motor_block_length=47.3;
@@ -35,10 +41,7 @@ motor_support_motor_hole_dist_top=9.5;
 motor_support_motor_hole_center_height=motor_support_height-motor_support_motor_hole_dist_top-motor_disk_diameter/2;
 
 
-// params for holes in the central cylinder
-hole_length=inner_tube_length-1;
-hole_depth=inner_tube_radius-5;
-hole_width=inner_tube_radius*0.7;
+
 
 reservoirH=30;
 

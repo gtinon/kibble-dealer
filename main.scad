@@ -1,10 +1,17 @@
+include <params.scad>
+
 use <parts/shell.scad>
 use <parts/main_cylinder.scad>
 use <parts/motor.scad>
+use <parts/bottom.scad>
 
 
 // outer shell
 %main_body();
+
+translate([0,0,-(inner_tube_radius+cylinder_radius_margin+thickness)])
+rotate([0,0,90])
+%bottom();
 
 // inner cylinder
 main_cylinder();
@@ -18,14 +25,9 @@ motor();
 // TODO
 // lockable door with axis hole
 // ground support to stabilize/attach the thingy
-// kibble ramp at the bottom (must be smart cat safe !!)
-// make an adapter for a bottle or something at the top of the reservoir (too big and too low value to print this)
 // add a support for the motor
-// add a protection for the motor
+// add a support + protection for the electronics
 
-// printing specific questions
-// need to remove stuff from main cylinder?
-// 
 
 
 
