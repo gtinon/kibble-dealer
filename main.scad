@@ -9,7 +9,7 @@ use <parts/bottom.scad>
 // outer shell
 %main_body();
 
-translate([0,0,-(inner_tube_radius+cylinder_radius_margin+thickness)])
+translate([0,thickness/2,-(inner_tube_radius+cylinder_radius_margin+thickness/2)])
 rotate([0,0,90])
 %bottom();
 
@@ -23,7 +23,8 @@ motor();
 
 
 // TODO
-// lockable door with axis hole
+// holes for bolts => size ?
+// door with axis hole
 // ground support to stabilize/attach the thingy
 // add a support for the motor
 // add a support + protection for the electronics

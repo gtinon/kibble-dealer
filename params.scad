@@ -17,6 +17,12 @@ hole_length=inner_tube_length-1;
 hole_width=inner_tube_radius*0.7;
 bottom_hole_width=inner_tube_radius*0.7;
 
+// shell
+shell_plate_width = inner_tube_radius * 1.5 + thickness * 2;
+shell_plate_length = inner_tube_length + thickness * 3;
+shell_plate_thickness = 3;
+shell_plate_wing_height = 10;
+
 // motor
 motor_total_length=71.35;
 motor_block_length=47.3;
