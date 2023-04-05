@@ -26,7 +26,8 @@ module main_body() {
     rear_panel(r);
     
     // reservoir
-    //reservoir(r, 1);
+    translate([0,0,21])
+    reservoir();
 }
 
 module rotor_shell(radius) {

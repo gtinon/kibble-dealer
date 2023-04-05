@@ -50,7 +50,7 @@ module main_cone_inner(h, offset=0) {
 }
 
 module main_cone_outer(h, offset) {
-    half_cone_shape(plug_diameter_max + offset*2, plug_diameter_min + offset, h);  
+    half_cone_shape(plug_diameter_max + offset*2, plug_diameter_min + offset*2, h);  
 }
 
 module half_cone_shape(dmax, dmin, height) {

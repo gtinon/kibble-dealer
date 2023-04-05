@@ -39,9 +39,6 @@ motor();
 
 
 // TODO
-// holes for bolts => 3mm diameter
-// connector for reservoir
-
 // box for the electronics => separate
 
 
