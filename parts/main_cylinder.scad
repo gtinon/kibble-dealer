@@ -1,7 +1,7 @@
 include <../params.scad>
 
 use <motor.scad>
-use <cylinder_doors.scad>
+use <shell.scad>
 
 // for local tests only
 main_cylinder();

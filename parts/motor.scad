@@ -11,13 +11,15 @@ module motor() {
     motor_block();
 }
 
-module motor_axis(radiusPadding=0) {
+module motor_axis(radiusPadding=0, with_flat_section=true) {
     difference() {
         rotate([90,0,0])
         cylinder(motor_axis_length,r=motor_axis_radius+radiusPadding,center=false,$fn=100);
         
-        translate([-5,-motor_axis_length-1,motor_axis_radius_flat])
-        cube([10,motor_axis_length+2,10],center=false);
+        if (with_flat_section) {
+            translate([-5,-motor_axis_length-1,motor_axis_radius_flat])
+            cube([10,motor_axis_length+2,10],center=false);
+        }
     }
 }
 

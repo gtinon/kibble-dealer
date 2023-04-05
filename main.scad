@@ -1,6 +1,7 @@
 include <params.scad>
 
 use <parts/shell.scad>
+use <parts/shell_door.scad>
 use <parts/main_cylinder.scad>
 use <parts/motor.scad>
 use <parts/motor_plate.scad>
@@ -10,7 +11,12 @@ use <parts/bottom.scad>
 // outer shell
 %main_body();
 
+// motor door
+translate([0,-inner_tube_length/2-0.01,0])
+shell_door();
+
 // inner cylinder
+translate([0,1,0])
 main_cylinder();
 
 // plate
@@ -33,11 +39,12 @@ motor();
 
 
 // TODO
-// holes for bolts => size ?
-// door with axis hole
-// ground support to stabilize/attach the thingy
-// add a support for the motor
-// add a support + protection for the electronics
+// holes for bolts => 3mm diameter
+// notches to lock door relative to the shell
+// lock motor rotation relative to the shell
+// connector for reservoir
+
+// box for the electronics => separate
 
 
 

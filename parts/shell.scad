@@ -1,7 +1,6 @@
 include <../params.scad>
 
 use <utils.scad>
-use <cylinder_doors.scad>
 use <reservoir.scad>
 
 // for local tests only
@@ -14,9 +13,15 @@ module main_body() {
     // tube
     rotor_shell(r);
     
-    // rear door
+    rotate([0,90,0])
+    motor_lock();
+    
+    rotate([0,-90,0])
+    motor_lock();
+
+    // rear panel
     translate([0,inner_tube_length/2+thickness,0])
-    rear_door(r);
+    rear_panel(r);
     
     // reservoir
     //reservoir(r, 1);
@@ -35,7 +40,7 @@ module rotor_shell(radius) {
             shell_base(radius, length);
 
             // top
-            //shell_top(radius, length);
+            // shell_top(radius, length);
         }
 
         // carve inside
@@ -52,21 +57,22 @@ module rotor_shell(radius) {
     }
 }
 
-module rear_door(r) {
+module rear_panel(r) {
     rotate([-90,0,0])
     %cylinder(thickness,r=r+thickness,center=false);
     
     // spacer + rear axis
-    axis_spacer(rear_axis_length,rear_axis_radius, rear_axis_padding);
+    // color("#0000AA")
+    rear_panel_spacer(rear_axis_length, rear_axis_radius, rear_axis_padding);
     
      // axis
     rear_axis();
 }
 
-
-module axis_spacer(total_height, axis_radius, spacer_height) {
+module rear_panel_spacer(total_height, axis_radius, spacer_height) {
     radius_bottom=axis_radius*1.5;
-    
+
+    // truncated cone    
     rotate([90,0,0])
     difference() {
         cylinder(total_height,r1=radius_bottom, r2=0,$fn=80,center=false);
@@ -76,6 +82,18 @@ module axis_spacer(total_height, axis_radius, spacer_height) {
     }
 }
 
+module rear_axis(radiusPadding=0, addTopCone=false) {    
+    rotate([90,0,0])
+    cylinder(rear_axis_length,r=rear_axis_radius+radiusPadding,center=false,$fn=80);
+
+    if (addTopCone) {
+        coneR = rear_axis_radius + radiusPadding;
+        
+        translate([0,-rear_axis_length,0])
+        rotate([90,0,0])
+        cylinder(h=coneR*1.2,r1=coneR,r2=0,center=false,$fn=80);
+    }
+}
 
 module shell_base(radius, length) {
     base_thickness = 10;
@@ -113,4 +131,15 @@ module shell_top(radius, length) {
 
     translate([0, thickness/2,+ radius + thickness])
     cube([top_width + thickness * 2, length + thickness, thickness], center=true);
+}
+
+module motor_lock() {
+    offset = 5;
+    lock_len = 30;
+    lock_w = 15;
+    lock_thickness = 4;
+
+    translate([0, -lock_len/2 - offset, inner_tube_radius+cylinder_radius_margin + lock_thickness/2 + 0.5])
+    rotate([90,0,-90])
+    trapezoid(lock_len, lock_len * 0.2, lock_thickness, lock_w, lock_len * 0.4);
 }
