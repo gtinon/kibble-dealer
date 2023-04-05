@@ -1,6 +1,7 @@
 include <../params.scad>
 
 use <utils.scad>
+use <shell_door.scad>
 use <reservoir.scad>
 
 // for local tests only
@@ -28,9 +29,10 @@ module main_body() {
 }
 
 module rotor_shell(radius) {
+    length = inner_tube_length + thickness * 2;
+
     difference() {
         union() {
-            length = inner_tube_length + thickness * 2;
             
             // outer_cylinder
             rotate([90,0,0])
@@ -54,6 +56,10 @@ module rotor_shell(radius) {
         // top hole
         translate([0,0,radius])
         cube([hole_width,hole_length*0.7,7], center=true);
+
+        // door notches
+        translate([0, -length/2+thickness, 0])
+        shell_door();
     }
 }
 

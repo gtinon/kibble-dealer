@@ -23,6 +23,10 @@ module shell_door_without_hole() {
     cylinder(thickness, r = inner_tube_radius + cylinder_radius_margin, center=false);
 
     door_spacer(7, motor_axis_radius, rear_axis_padding);
+
+    translate([0, -thickness/2, 0])
+    rotate([90,35,0])
+    cube([inner_tube_radius * 2 + cylinder_radius_margin * 2 + thickness * 2, 5, thickness], center=true);
 }
 
 module door_spacer(total_height, axis_radius, spacer_height) {

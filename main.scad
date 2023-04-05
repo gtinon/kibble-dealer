@@ -40,8 +40,6 @@ motor();
 
 // TODO
 // holes for bolts => 3mm diameter
-// notches to lock door relative to the shell
-// lock motor rotation relative to the shell
 // connector for reservoir
 
 // box for the electronics => separate
