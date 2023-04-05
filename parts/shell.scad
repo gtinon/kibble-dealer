@@ -3,6 +3,7 @@ include <../params.scad>
 use <utils.scad>
 use <shell_door.scad>
 use <reservoir.scad>
+use <shell_bolts.scad>
 
 // for local tests only
 main_body();
@@ -60,6 +61,11 @@ module rotor_shell(radius) {
         // door notches
         translate([0, -length/2+thickness, 0])
         shell_door();
+
+        // bottom bolt holes
+        color("#ff0000")
+        translate([0,0,-inner_tube_radius-2])
+        shell_bottom_bolts();
     }
 }
 

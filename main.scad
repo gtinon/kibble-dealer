@@ -30,7 +30,7 @@ translate([0,
     thickness/2,
     -(inner_tube_radius+cylinder_radius_margin+thickness+shell_plate_thickness)])
 rotate([0,0,90])
-%bottom();
+bottom();
 
 // not to print
 rotate([0,0,180])

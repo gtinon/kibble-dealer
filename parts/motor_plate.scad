@@ -1,6 +1,7 @@
 include <../params.scad>
 
 use <utils.scad>
+use <shell_bolts.scad>
 
 
 motor_plate();
@@ -22,6 +23,10 @@ module motor_plate() {
         color("#ff0000")
         translate([0, -hole_length/2 + wing_h - thickness * 2, 0])
         cube([bottom_hole_width, hole_length, 10], center=true);
+
+        color("#ff0000")
+        translate([0,-18,0])
+        shell_bottom_bolts();
     }
 
     motor_rear_bumper();

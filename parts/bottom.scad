@@ -1,14 +1,16 @@
 include <../params.scad>
 
 use <connector.scad>
+use <shell_bolts.scad>
 
 
 bottom();
 
+coverH = 1.5;
+holeH = 5;
+
 
 module bottom() {
-    coverH = 1.5;
-    holeH = 5;
     
     translate([0,0,-plug_height_male-coverH])
     connector_male();
@@ -16,15 +18,26 @@ module bottom() {
     translate([0,0,-coverH])
     diffHullThenAdd() {
         // cover
-        cylinder(coverH, r=plug_diameter_max/2, $fn=100);
-        
+        top_cover();
+
         // payload hole
         rotate([0,0,90])
-        snap_fit_hole(bottom_hole_width, hole_length, holeH, coverH);
+        payload_hole(bottom_hole_width, hole_length, holeH, coverH);
+    }   
+}
+
+module top_cover() {
+    difference() {
+        cylinder(coverH, r=plug_diameter_max/2, $fn=100);
+            
+        color("#ff0000")
+        rotate([0,0,90])
+        translate([0,1,3])
+        shell_bottom_bolts();
     }
 }
 
-module snap_fit_hole(width, length, depth, wallW) {
+module payload_hole(width, length, depth, wallW) {
     color("#00aa00")
     translate([0,0,-depth/2+wallW+0.01])
     difference() {
