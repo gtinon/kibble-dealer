@@ -41,10 +41,10 @@ module payload_hole(width, length, depth, wallW) {
     color("#00aa00")
     translate([0,0,-depth/2+wallW+0.01])
     difference() {
-        cube([width,length,depth], center=true);
+        cube([width + 2*wallW, length + 2*wallW, depth], center=true);
 
         //translate([-wallW/2-0.01,0,0])
-        cube([width-2*wallW, length-2*wallW, depth*2], center=true);
+        cube([width, length, depth*2], center=true);
     }
 }
 
