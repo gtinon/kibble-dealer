@@ -6,7 +6,7 @@ use <shell_bolts.scad>
 
 motor_plate();
 
- w = shell_plate_width + shell_plate_wing_height * 2;
+w = shell_plate_width + shell_plate_wing_height * 2;
 w2 = shell_plate_width;
 wing_h = shell_plate_length * 0.2;
 plate_len = shell_plate_length - wing_h + motor_block_length + thickness * 2;

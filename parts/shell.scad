@@ -2,7 +2,6 @@ include <../params.scad>
 
 use <utils.scad>
 use <shell_door.scad>
-use <reservoir.scad>
 use <shell_bolts.scad>
 
 // for local tests only
@@ -16,18 +15,14 @@ module main_body() {
     rotor_shell(r);
     
     rotate([0,90,0])
-    motor_lock();
+    motor_clamp();
     
     rotate([0,-90,0])
-    motor_lock();
+    motor_clamp();
 
     // rear panel
     translate([0,inner_tube_length/2+thickness,0])
     rear_panel(r);
-    
-    // reservoir
-    translate([0,0,21])
-    reservoir();
 }
 
 module rotor_shell(radius) {
@@ -44,7 +39,8 @@ module rotor_shell(radius) {
             shell_base(radius, length);
 
             // top
-            // shell_top(radius, length);
+            translate([0,0,0])
+            shell_top(radius, length);
         }
 
         // carve inside
@@ -135,18 +131,26 @@ module shell_base(radius, length) {
 }
 
 module shell_top(radius, length) {
-    top_thickness = 10;
-    top_width = radius * 1.5;
+    top_thickness = 4;
+    top_width = radius * 1.2;
 
     // base
     translate([0, thickness/2, radius + thickness - top_thickness/2])
     cube([top_width, length + thickness, top_thickness], center=true);
 
-    translate([0, thickness/2,+ radius + thickness])
-    cube([top_width + thickness * 2, length + thickness, thickness], center=true);
+    // rails
+    rails_h = 2.5;
+    translate([0, thickness/2, radius + thickness])
+    %difference() {
+        translate([0, 0, thickness/2 + rails_h/2])
+        cube([top_width + thickness * 2 + 4, length + thickness + 0, thickness + rails_h], center=true);
+
+        translate([0, -8, thickness])
+        reservoir_rail_male(60, 0.2);
+    }
 }
 
-module motor_lock() {
+module motor_clamp() {
     offset = 5;
     lock_len = 30;
     lock_w = 15;
@@ -155,4 +159,14 @@ module motor_lock() {
     translate([0, -lock_len/2 - offset, inner_tube_radius+cylinder_radius_margin + lock_thickness/2 + 0.5])
     rotate([90,0,-90])
     trapezoid(lock_len, lock_len * 0.2, lock_thickness, lock_w, lock_len * 0.4);
+}
+
+module reservoir_rail_male(length, padding=0) {
+    clip_h = 7;
+    clip_w_min = hole_width + 4;
+    clip_w_max = hole_width + 14;
+
+    translate([0, 0, clip_h/2])
+    rotate([90, 0, 0])
+    trapezoid(clip_w_max + padding*2, clip_w_min + padding*2, clip_h + padding*2, length);
 }

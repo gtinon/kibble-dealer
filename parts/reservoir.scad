@@ -1,18 +1,21 @@
 include <../params.scad>
 
 use <connector.scad>
+use <shell.scad>
+use <utils.scad>
 
 reservoir();
-
 
 module reservoir() {
     radius = inner_tube_radius;
     length = hole_length * 0.7;
-    adapter_h = 20;
+    adapter_h = 30;
 
+    // top
     translate([0,0,adapter_h])
     connector_female();
 
+    // bottom
     translate([0,0,0])
     reservoir_adapter(2, adapter_h, radius, length, 19);
 }
@@ -22,13 +25,20 @@ module reservoir_adapter(wall_thickness, height, radius, length, dst_cut_cylinde
     rect_w = hole_width;
     rect_h = length;
     difference() {
-        circle2rect(plug_diameter_min/2   + wall_thickness, rect_w + wall_thickness * 2, rect_h + wall_thickness * 2, height);
-        circle2rect(plug_diameter_min/2 + 0.55, rect_w, rect_h, height+0.01);
+        union() {
+            circle2rect(plug_diameter_min/2   + wall_thickness, rect_w + wall_thickness * 2, rect_h + wall_thickness * 2, height);
 
-        // adapt lower part to circular base
-        translate([0,0,-dst_cut_cylinder])
-        rotate([90,0,0])
-        cylinder(length*2,r=radius,center=true,$fn=100);   
+            // rail female part
+            translate([0, 0, -0.05])
+            reservoir_rail_male(hole_length * 0.92);
+
+            // holding tab
+            translate([0, -hole_length * 0.9/2, -0.05])
+            holding_tab();
+        }
+        
+        translate([0,0,-0.01])
+        circle2rect(plug_diameter_min/2 + 0.55, rect_w, rect_h, height+0.02);  
     }
 }
 
@@ -43,19 +53,26 @@ module circle2rect(radius, rect_w, rect_h, height) {
     }
 }
 
+module holding_tab() {
+    tab_base_h = 9;
+    tab_len = 7.5;
+    tab_w = 20;
 
-module input_shaft_shape(length, depth, base_width, max_width) {
-    dw = max_width - base_width;
-    
-    rotate([-180,0,0]) 
-    translate([-max_width/2,-depth/2,-length/2]) 
-    linear_extrude(height=length) {
-        polygon(points = [
-            [0, 0],
-            [max_width, 0],
-            [max_width - dw/2, depth],
-            [dw/2, depth]
-        ]);
-    }
-        
+    // base
+    translate([0, -tab_len/2, tab_base_h/2])
+    rotate([90, 0, 90])
+    trapezoid(tab_len, 0, tab_base_h, tab_w, tab_len/2);
+
+    // vertical clip
+    clip_h = 7;
+    clip_thickness = 1.5;
+    translate([0, -tab_len +1 + clip_thickness/2, -clip_h/2])
+    cube([tab_w, clip_thickness, clip_h], center=true);
+
+    // motor holder small extension
+    holder_h = 3.1;
+    holder_len = 2;
+    translate([0, -tab_len + 1 - holder_len/2, -holder_h/2])
+    rotate([90, 0, 90])
+    trapezoid(holder_len, 1, holder_h, tab_w, (holder_len-1)/2);
 }

@@ -6,6 +6,7 @@ use <parts/main_cylinder.scad>
 use <parts/motor.scad>
 use <parts/motor_plate.scad>
 use <parts/bottom.scad>
+use <parts/reservoir.scad>
 
 
 // outer shell
@@ -31,6 +32,10 @@ translate([0,
     -(inner_tube_radius+cylinder_radius_margin+thickness+shell_plate_thickness)])
 rotate([0,0,90])
 bottom();
+    
+// top adapter
+translate([0,0,24.5])
+reservoir();
 
 // not to print
 rotate([0,0,180])
