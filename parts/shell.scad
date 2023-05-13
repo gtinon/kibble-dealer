@@ -5,6 +5,7 @@ use <shell_door.scad>
 use <shell_bolts.scad>
 
 // for local tests only
+//cut([0,-1.3,0])
 main_body();
 
 
@@ -48,12 +49,14 @@ module rotor_shell(radius) {
         cylinder(inner_tube_length+thickness*4,r=radius,center=true,$fn=100);
         
         // bottom hole
-        translate([0,0,-radius])
-        cube([bottom_hole_width,hole_length,7], center=true);
+        color("#00ff00")
+        translate([0,inner_tube_length/2 - bottom_hole_length/2 + thickness, -radius])
+        cube([bottom_hole_width,bottom_hole_length,7], center=true);
         
         // top hole
-        translate([0,0,radius])
-        cube([hole_width,hole_length*0.7,7], center=true);
+        color("#00ff00")
+        translate([0,-inner_tube_length/2 + input_hole_length/2 + input_hole_offset,radius])
+        cube([input_hole_width,input_hole_length,20], center=true);
 
         // door notches
         translate([0, -length/2+thickness, 0])
@@ -68,7 +71,7 @@ module rotor_shell(radius) {
 
 module rear_panel(r) {
     rotate([-90,0,0])
-    %cylinder(thickness,r=r+thickness,center=false);
+    cylinder(thickness,r=r+thickness,center=false);
     
     // spacer + rear axis
     // color("#0000AA")
@@ -141,12 +144,12 @@ module shell_top(radius, length) {
     // rails
     rails_h = 2.5;
     translate([0, thickness/2, radius + thickness])
-    %difference() {
+    difference() {
         translate([0, 0, thickness/2 + rails_h/2])
         cube([top_width + thickness * 2 + 4, length + thickness + 0, thickness + rails_h], center=true);
 
         translate([0, -8, thickness])
-        reservoir_rail_male(60, 0.2);
+        reservoir_rail_male(inner_tube_length, 0.2);
     }
 }
 
@@ -163,8 +166,8 @@ module motor_clamp() {
 
 module reservoir_rail_male(length, padding=0) {
     clip_h = 7;
-    clip_w_min = hole_width + 4;
-    clip_w_max = hole_width + 14;
+    clip_w_min = input_hole_width + 4;
+    clip_w_max = input_hole_width + 9;
 
     translate([0, 0, clip_h/2])
     rotate([90, 0, 0])

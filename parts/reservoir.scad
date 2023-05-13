@@ -8,7 +8,7 @@ reservoir();
 
 module reservoir() {
     radius = inner_tube_radius;
-    length = hole_length * 0.7;
+    length = input_hole_length;
     adapter_h = 30;
 
     // top
@@ -22,7 +22,7 @@ module reservoir() {
 
 
 module reservoir_adapter(wall_thickness, height, radius, length, dst_cut_cylinder=15) {
-    rect_w = hole_width;
+    rect_w = input_hole_width;
     rect_h = length;
     difference() {
         union() {
@@ -30,10 +30,10 @@ module reservoir_adapter(wall_thickness, height, radius, length, dst_cut_cylinde
 
             // rail female part
             translate([0, 0, -0.05])
-            reservoir_rail_male(hole_length * 0.92);
+            reservoir_rail_male(input_hole_length * 0.92);
 
             // holding tab
-            translate([0, -hole_length * 0.9/2, -0.05])
+            translate([0, -input_hole_length/2 - thickness, -0.05])
             holding_tab();
         }
         

@@ -22,7 +22,7 @@ module bottom() {
 
         // payload hole
         rotate([0,0,90])
-        payload_hole(bottom_hole_width, hole_length, holeH, coverH);
+        payload_hole(bottom_hole_width, bottom_hole_length, holeH, coverH);
     }   
 }
 

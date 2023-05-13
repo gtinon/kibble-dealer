@@ -1,7 +1,7 @@
 thickness=2;
 
-// params for the central cylinder
-inner_tube_length=50;
+// params for the central screw
+inner_tube_length=60;
 inner_tube_radius=20;
 
 cylinder_radius_margin=0.5;
@@ -11,13 +11,14 @@ rear_axis_length=10;
 rear_axis_padding=1;
 front_axis_padding=1;
 
-// params for holes in the central cylinder
-hole_depth=inner_tube_radius-5;
-hole_length=inner_tube_length-1;
-hole_width=inner_tube_radius*0.7;
+// shell
+input_hole_length=25;
+input_hole_offset=5;
+input_hole_width=inner_tube_radius*1;
+bottom_hole_length=15;
 bottom_hole_width=inner_tube_radius*0.7;
 
-// shell
+// shell plate
 shell_plate_width = inner_tube_radius * 1.5 + thickness * 2;
 shell_plate_length = inner_tube_length + thickness * 3;
 shell_plate_thickness = 3;
@@ -41,7 +42,7 @@ motor_axis_radius_flat=motor_axis_diameter_flat - motor_axis_radius;
 motor_support_width=50;
 motor_support_height=51;
 motor_support_length=54;
-motor_support_hole_length=33.5;
+motor_support_hole_length=bottom_hole_length;
 motor_support_hole_width=4;
 motor_support_motor_hole_dist_top=9.5;
 motor_support_motor_hole_center_height=motor_support_height-motor_support_motor_hole_dist_top-motor_disk_diameter/2;

@@ -9,7 +9,7 @@ motor_plate();
 w = shell_plate_width + shell_plate_wing_height * 2;
 w2 = shell_plate_width;
 wing_h = shell_plate_length * 0.2;
-plate_len = shell_plate_length - wing_h + motor_block_length + thickness * 2;
+plate_len = shell_plate_length - wing_h + motor_block_length + thickness*3;
 
 bumper_rear_h = 8;
 bumper_side_h = 8;
@@ -21,8 +21,8 @@ module motor_plate() {
         
         // payload hole
         color("#ff0000")
-        translate([0, -hole_length/2 + wing_h - thickness * 2, 0])
-        cube([bottom_hole_width, hole_length, 10], center=true);
+        translate([0, 2.5, 0])
+        cube([bottom_hole_width, bottom_hole_length, 10], center=true);
 
         color("#ff0000")
         translate([0,-18,0])
@@ -42,7 +42,7 @@ module base_plate() {
     cube([w, plate_len, shell_plate_thickness], center=true);
 
     // motor height compensation
-    comp_h = 1.3;
+    comp_h = inner_tube_radius+cylinder_radius_margin+thickness - motor_block_side/2 - 0.3;
     translate([0, -plate_len + motor_block_length/2 + thickness, shell_plate_thickness/2 + comp_h/2])
     cube([motor_block_side*0.8, motor_block_length, comp_h], center=true);
 }
