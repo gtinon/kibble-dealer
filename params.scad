@@ -1,28 +1,39 @@
-thickness=2;
+thickness=1;
+clearance=0.3;
 
 // params for the central screw
 inner_tube_length=60;
 inner_tube_radius=20;
-
-cylinder_radius_margin=0.5;
-
 rear_axis_radius=3;
 rear_axis_length=10;
 rear_axis_padding=1;
 front_axis_padding=1;
 
 // shell
+cylinder_radius_margin=0.5;
+shell_length = inner_tube_length + rear_axis_padding + front_axis_padding + thickness*2;
+shell_radius_inner = inner_tube_radius + cylinder_radius_margin;
+shell_radius_outer = shell_radius_inner + thickness;
 input_hole_length=25;
 input_hole_offset=5;
 input_hole_width=inner_tube_radius*1;
 bottom_hole_length=15;
 bottom_hole_width=inner_tube_radius*0.7;
 
-// shell plate
+// shell base
 shell_plate_width = inner_tube_radius * 1.5 + thickness * 2;
-shell_plate_length = inner_tube_length + thickness * 3;
+shell_plate_length = inner_tube_length + front_axis_padding + rear_axis_padding + thickness * 2;
 shell_plate_thickness = 3;
 shell_plate_wing_height = 10;
+
+
+// middle plate
+motor_plate_bottom_extra=12;
+
+
+// bottom adapter
+bottom_offset=-bottom_hole_length/3;
+
 
 // motor
 motor_total_length=71.35;

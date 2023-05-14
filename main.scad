@@ -11,44 +11,51 @@ use <parts/reservoir.scad>
 
 spacing=0.1;
 
+*translate([0,-shell_length/2 + input_hole_offset/2,shell_radius_outer+0.5])
+cube([1,input_hole_offset,1], center=true);
+
 cut([-0.01,0,0])
 //cut([0,-10,0])
 //cut([0,0,1])
 union() {
+
     // outer shell
-    translate([0,spacing,0])
+    translate([0,0,0])
     main_body();
 
     // motor door
-    translate([0,-inner_tube_length/2-0.01,-0.3])
+    translate([0,-inner_tube_length/2 - front_axis_padding, 0])
     shell_door();
 
     // inner cylinder
-    translate([0,-inner_tube_length/2+1,0])
-    rotate([-90,0,0])
+    translate([0,-inner_tube_length/2 + spacing,0])
+    rotate([-90,90,0])
     infinite_screw();
 
-    // plate
+
+    // middle plate
     translate([0,
-        inner_tube_length/2-thickness*4,
-        -inner_tube_radius - shell_plate_thickness - thickness/2-spacing])
+        inner_tube_length/2 + front_axis_padding + rear_axis_padding,
+        -inner_tube_radius - shell_plate_thickness - spacing])
     motor_plate();
 
-    // bottom adapter
-    translate([0, 24.5,
-        -(inner_tube_radius+cylinder_radius_margin+thickness+shell_plate_thickness+spacing*2)])
-    rotate([0,0,90])
-    bottom();
-        
+
     // top adapter
-    translate([0, -inner_tube_length/2 + input_hole_width/2 + thickness + input_hole_offset + 0.4,
-        inner_tube_radius+cylinder_radius_margin+thickness*2+spacing])
+    translate([0, -shell_length/2  + input_hole_offset + input_hole_length/2,
+        shell_radius_outer + spacing])
     reservoir();
 
+    // bottom adapter
+    translate([0, shell_length/2 - bottom_hole_length/2 - thickness + bottom_offset,
+        -(shell_radius_outer + shell_plate_thickness + spacing*2)])
+    bottom();
+
+
+
     // not to print
-    translate([0,-inner_tube_length/2 - thickness - spacing*2, -0.2]) 
+    translate([0,-inner_tube_length/2 - rear_axis_padding - thickness - spacing*1, 0]) 
     rotate([0,0,180])
-    motor();
+    motor(90);
 
 
     // TODO

@@ -6,7 +6,8 @@ include <../params.scad>
 motor();
 
 
-module motor() {
+module motor(axis_angle=90) {
+    rotate([0,axis_angle,0])
     motor_axis();
     motor_block();
 }

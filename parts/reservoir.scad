@@ -4,6 +4,7 @@ use <connector.scad>
 use <shell.scad>
 use <utils.scad>
 
+//cut([-0.01,0,0])
 reservoir();
 
 module reservoir() {
@@ -29,11 +30,12 @@ module reservoir_adapter(wall_thickness, height, radius, length, dst_cut_cylinde
             circle2rect(plug_diameter_min/2   + wall_thickness, rect_w + wall_thickness * 2, rect_h + wall_thickness * 2, height);
 
             // rail female part
-            translate([0, 0, -0.05])
-            reservoir_rail_male(input_hole_length * 0.92);
+            translate([0, 0, -0.01])
+            reservoir_rail_male(input_hole_length * 0.9);
 
             // holding tab
-            translate([0, -input_hole_length/2 - thickness, -0.05])
+            //color("#00aaaa")
+            translate([0, -input_hole_length/2, 0])
             holding_tab();
         }
         
@@ -45,6 +47,7 @@ module reservoir_adapter(wall_thickness, height, radius, length, dst_cut_cylinde
 
 module circle2rect(radius, rect_w, rect_h, height) {
     hull() {
+        translate([0,0,0.05 - 0.001])
         cube([rect_w,rect_h,0.1], center=true);
 
         translate([0,0,height])
@@ -54,9 +57,15 @@ module circle2rect(radius, rect_w, rect_h, height) {
 }
 
 module holding_tab() {
-    tab_base_h = 9;
-    tab_len = 7.5;
-    tab_w = 20;
+    clip_h = 7;
+    clip_thickness = motor_disk_length - clearance*1.5;
+
+    holder_h = 0.5 - clearance*0.5;
+    holder_len = 2;
+
+    tab_base_h = 10;
+    tab_len = input_hole_offset + clearance + clip_thickness + holder_len;
+    tab_w = input_hole_width;
 
     // base
     translate([0, -tab_len/2, tab_base_h/2])
@@ -64,15 +73,10 @@ module holding_tab() {
     trapezoid(tab_len, 0, tab_base_h, tab_w, tab_len/2);
 
     // vertical clip
-    clip_h = 7;
-    clip_thickness = 1.5;
-    translate([0, -tab_len +1 + clip_thickness/2, -clip_h/2])
+    translate([0, -(input_hole_offset + clearance + clip_thickness) + clip_thickness/2, -clip_h/2])
     cube([tab_w, clip_thickness, clip_h], center=true);
 
     // motor holder small extension
-    holder_h = 3.1;
-    holder_len = 2;
-    translate([0, -tab_len + 1 - holder_len/2, -holder_h/2])
-    rotate([90, 0, 90])
-    trapezoid(holder_len, 1, holder_h, tab_w, (holder_len-1)/2);
+    translate([0, -tab_len + holder_len/2, -holder_h/2])
+    cube([tab_w, holder_len, holder_h], center=true);
 }

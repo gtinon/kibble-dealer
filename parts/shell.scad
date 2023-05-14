@@ -5,15 +5,13 @@ use <shell_door.scad>
 use <shell_bolts.scad>
 
 // for local tests only
-//cut([0,-1.3,0])
+//cut([-0.01,0,0])
+cut([0,-0.01,0])
 main_body();
 
-
-module main_body() {    
-    r=inner_tube_radius+cylinder_radius_margin;
-    
+module main_body() {
     // tube
-    rotor_shell(r);
+    rotor_shell();
     
     rotate([0,90,0])
     motor_clamp();
@@ -22,45 +20,42 @@ module main_body() {
     motor_clamp();
 
     // rear panel
-    translate([0,inner_tube_length/2+thickness,0])
-    rear_panel(r);
+    translate([0,inner_tube_length/2 + rear_axis_padding, 0])
+    rear_panel(shell_radius_inner);
 }
 
-module rotor_shell(radius) {
-    length = inner_tube_length + thickness * 2;
-
+module rotor_shell() {
     difference() {
         union() {
-            
             // outer_cylinder
             rotate([90,0,0])
-            cylinder(length,r=radius+thickness,center=true,$fn=100);
+            cylinder(shell_length,r=shell_radius_outer,center=true,$fn=100);
 
             // base
-            shell_base(radius, length);
+            shell_base(shell_radius_outer, shell_length);
 
             // top
             translate([0,0,0])
-            shell_top(radius, length);
+            shell_top(shell_radius_outer, shell_length);
         }
 
         // carve inside
         rotate([90,0,0])
-        cylinder(inner_tube_length+thickness*4,r=radius,center=true,$fn=100);
+        cylinder(shell_length+100,r=shell_radius_inner,center=true,$fn=100);
         
         // bottom hole
         color("#00ff00")
-        translate([0,inner_tube_length/2 - bottom_hole_length/2 + thickness, -radius])
+        translate([0,inner_tube_length/2 + rear_axis_padding - bottom_hole_length/2, -shell_radius_outer])
         cube([bottom_hole_width,bottom_hole_length,7], center=true);
         
         // top hole
         color("#00ff00")
-        translate([0,-inner_tube_length/2 + input_hole_length/2 + input_hole_offset,radius])
+        translate([0, -shell_length/2 + input_hole_length/2 + input_hole_offset, shell_radius_outer])
         cube([input_hole_width,input_hole_length,20], center=true);
 
         // door notches
-        translate([0, -length/2+thickness, 0])
-        shell_door();
+        translate([0, -shell_length/2 + thickness -0.01, 0])
+        shell_door(clearance*2);
 
         // bottom bolt holes
         color("#ff0000")
@@ -111,11 +106,12 @@ module shell_base(radius, length) {
     base_thickness = 10;
     base_width = radius * 1.6;
     
-    // base
-    translate([0,thickness/2,-radius-thickness+base_thickness/2])
-    cube([base_width,length+thickness,base_thickness], center=true);
+    // base to hold cylinder and bottom plate
+    translate([0, 0, -radius + base_thickness/2])
+    cube([base_width,length,base_thickness], center=true);
 
-    translate([0, thickness/2, -radius - thickness + shell_plate_thickness/2])
+    // plate
+    translate([0, 0, -radius + shell_plate_thickness/2])
     union() {
         // plate center
         cube([shell_plate_width, shell_plate_length, shell_plate_thickness], center=true);
@@ -134,22 +130,26 @@ module shell_base(radius, length) {
 }
 
 module shell_top(radius, length) {
-    top_thickness = 4;
-    top_width = radius * 1.2;
-
-    // base
-    translate([0, thickness/2, radius + thickness - top_thickness/2])
-    cube([top_width, length + thickness, top_thickness], center=true);
-
-    // rails
+    top_thickness = 5.5;
+    top_width = radius * 1.3;
     rails_h = 2.5;
-    translate([0, thickness/2, radius + thickness])
-    difference() {
-        translate([0, 0, thickness/2 + rails_h/2])
-        cube([top_width + thickness * 2 + 4, length + thickness + 0, thickness + rails_h], center=true);
 
-        translate([0, -8, thickness])
-        reservoir_rail_male(inner_tube_length, 0.2);
+    translate([0, 0, radius])
+    difference() {
+        union() {
+            // base
+            translate([0, 0, -top_thickness/2])
+            cube([top_width, length, top_thickness], center=true);
+
+            // plate in which rails are cut
+            w=top_width + thickness * 4;
+            translate([-w/2, -length/2, -thickness])
+            cube([w, length, thickness + rails_h], center=false);
+        }
+        
+        // carve rails
+        translate([0, -5, clearance])
+        reservoir_rail_male(inner_tube_length, clearance);
     }
 }
 
