@@ -6,18 +6,12 @@ use <shell_bolts.scad>
 
 // for local tests only
 //cut([-0.01,0,0])
-cut([0,-0.01,0])
+cut([0,-58,0])
 main_body();
 
 module main_body() {
     // tube
     rotor_shell();
-    
-    rotate([0,90,0])
-    motor_clamp();
-    
-    rotate([0,-90,0])
-    motor_clamp();
 
     // rear panel
     translate([0,inner_tube_length/2 + rear_axis_padding, 0])
@@ -37,6 +31,9 @@ module rotor_shell() {
             // top
             translate([0,0,0])
             shell_top(shell_radius_outer, shell_length);
+    
+            // motor clamps
+            motor_clamps();
         }
 
         // carve inside
@@ -153,13 +150,32 @@ module shell_top(radius, length) {
     }
 }
 
-module motor_clamp() {
-    offset = 5;
-    lock_len = 30;
-    lock_w = 15;
-    lock_thickness = 4;
+module motor_clamps() {
+    clamp_offset = 5;
 
-    translate([0, -lock_len/2 - offset, inner_tube_radius+cylinder_radius_margin + lock_thickness/2 + 0.5])
+    lock_len = 35;
+    lock_w = 15;
+    lock_thickness = 5;
+    
+    color("#9000a0")
+    translate([0, -shell_length/2 + lock_len/2 - clamp_offset, 0])
+    difference() {
+        union() {
+            rotate([0,90,0])
+            motor_clamp(lock_len, lock_w, lock_thickness);
+            
+            rotate([0,-90,0])
+            motor_clamp(lock_len, lock_w, lock_thickness);
+        }
+
+        cube_w = motor_block_side+clearance;
+        translate([0, -lock_len/2 - cube_w/2 + clamp_offset, 0])
+        cube(cube_w, center=true);
+    }
+}
+
+module motor_clamp(lock_len, lock_w, lock_thickness) {
+    translate([0, 0, motor_block_side/2 + lock_thickness/2 - thickness])
     rotate([90,0,-90])
     trapezoid(lock_len, lock_len * 0.2, lock_thickness, lock_w, lock_len * 0.4);
 }
