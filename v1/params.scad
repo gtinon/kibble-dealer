@@ -35,20 +35,6 @@ motor_plate_bottom_extra=12;
 bottom_offset=-bottom_hole_length/3;
 
 
-// motor
-motor_total_length=71.35;
-motor_block_length=47.3;
-motor_block_side=42.3;
-motor_block_flat_diameter=53.6;
-motor_block_and_disk_length=49;
-motor_disk_diameter=22;
-motor_disk_length=motor_block_and_disk_length - motor_block_length;
-motor_axis_length=motor_total_length - motor_block_and_disk_length;
-motor_axis_diameter=5;
-motor_axis_diameter_flat=4.5;
-motor_axis_radius=motor_axis_diameter / 2;
-motor_axis_radius_flat=motor_axis_diameter_flat - motor_axis_radius;
-
 // motor holder
 motor_support_width=50;
 motor_support_height=51;

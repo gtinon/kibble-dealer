@@ -1,10 +1,10 @@
 include <params.scad>
 
-use <parts/utils.scad>
+use <../utils/utils.scad>
+use <../utils/motor.scad>
 use <parts/shell.scad>
 use <parts/shell_door.scad>
 use <parts/screw.scad>
-use <parts/motor.scad>
 use <parts/motor_plate.scad>
 use <parts/bottom.scad>
 use <parts/reservoir.scad>

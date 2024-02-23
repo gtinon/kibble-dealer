@@ -10,6 +10,8 @@ module trapezoid(len1, len2, h, thickness, top_offset_x = 0) {
     }
 }
 
+
+
 module cut(vec=[1,0,0]){
     cube_size = 300;
     difference(){
@@ -20,5 +22,23 @@ module cut(vec=[1,0,0]){
         color("#ff0000")
         translate(base_offset + vec)
         cube(cube_size,true);
+    }
+}
+
+module rect_rounded(width, height, thickness, rounding_radius) {
+    w = width/2 - rounding_radius;
+    h = height/2 - rounding_radius;
+    hull() {
+        translate([-w, -h, 0])
+        cylinder(thickness, r=rounding_radius, center=false, $fn=48);
+        
+        translate([w, -h, 0])
+        cylinder(thickness, r=rounding_radius, center=false, $fn=48);
+        
+        translate([-w, h, 0])
+        cylinder(thickness, r=rounding_radius, center=false, $fn=48);
+        
+        translate([w, h, 0])
+        cylinder(thickness, r=rounding_radius, center=false, $fn=48);
     }
 }
